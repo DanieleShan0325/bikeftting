@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bike Fitting</title>
+</head>
+
+<body>
+    <h1>Bike Fitting</h1>
+    <form onsubmit="getRecommendedBikeModels(); return false;">
+        <label for="riderHeight">請輸入你的身高：</label>
+        <input type="number" id="riderHeight" name="riderHeight" required>
+        <button type="submit">確定</button>
+    </form>
+    <label>建議的單車型號：</label>
+    <ul id="recommendedBikeModelsList">
+    </ul>
+
+    <script>
+        function getRecommendedBikeModels() {
+            var riderHeight = parseInt(document.getElementById("riderHeight").value);
+
+            fetch(`/recommendedBikeModels/${riderHeight}`)
+                .then(response => response.json())
+                .then(data => {
+                    var recommendedBikeModelsList = document.getElementById("recommendedBikeModelsList");
+                    recommendedBikeModelsList.innerHTML = "";
+
+                    data.forEach(bike => {
+                        var listItem = document.createElement("li");
+                        listItem.textContent = bike.bikeName;
+                        recommendedBikeModelsList.appendChild(listItem);
+                    });
+                });
+        }
+    </script>
+</body>
+
+</html>

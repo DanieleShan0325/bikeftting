@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bike Fitting</title>
+</head>
+
+<body>
+    <h1>Bike Fitting</h1>
+    <form onsubmit="getRecommendedBikeModels(); return false;">
+        <label for="riderHeight">請輸入你的身高：</label>
+        <input type="number" id="riderHeight" name="riderHeight" required>
+        <button type="submit">確定</button>
+    </form>
+    <label>建議的單車型號：</label>
+    <ul id="recommendedBikeModelsList">
+    </ul>
+
+    <script>
+        function getRecommendedBikeModels() {
+            var riderHeight = parseInt(document.getElementById("riderHeight").value);
+
+            // 模擬後端返回的JSON數據
+            var bikeData = [
+                { bikeName: "TCR", bikeBrand: "Giant", bikeSize: "s" },
+                { bikeName: "TCR", bikeBrand: "Giant", bikeSize: "m" },
+                { bikeName: "TCR", bikeBrand: "Giant", bikeSize: "l" },
+                { bikeName: "Domane slr6", bikeBrand: "Trek", bikeSize: "s" },
+                { bikeName: "Domane slr6", bikeBrand: "Trek", bikeSize: "m" },
+                { bikeName: "Domane slr6", bikeBrand: "Trek", bikeSize: "l" },
+                { bikeName: "Mardone slr9", bikeBrand: "Trek", bikeSize: "s" },
+                { bikeName: "Mardone slr9", bikeBrand: "Trek", bikeSize: "m" },
+                { bikeName: "Mardone slr9", bikeBrand: "Trek", bikeSize: "l" },
+                { bikeName: "Teammachine SLR", bikeBrand: "BMC", bikeSize: "s" },
+                { bikeName: "Teammachine SLR", bikeBrand: "BMC", bikeSize: "m" },
+                { bikeName: "Teammachine SLR", bikeBrand: "BMC", bikeSize: "l" }
+            ];
+
+            var recommendedBikeModelsList = document.getElementById("recommendedBikeModelsList");
+            recommendedBikeModelsList.innerHTML = "";
+
+            bikeData.forEach(bike => {
+                if ((riderHeight > 170 && bike.bikeSize === "l") ||
+                    (riderHeight > 160 && riderHeight <= 170 && bike.bikeSize === "m") ||
+                    (riderHeight <= 160 && bike.bikeSize === "s")) {
+
+                    var listItem = document.createElement("li");
+                    listItem.textContent = bike.bikeName + "/" + bike.bikeBrand + "/" + bike.bikeSize;
+                    recommendedBikeModelsList.appendChild(listItem);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
